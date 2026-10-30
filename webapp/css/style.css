@@ -1,0 +1,19 @@
+/* Shared layout for the student pages. */
+.wsRow {
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.wsRow > .sapMFlexItem {
+  flex: 1 1 0;
+  min-width: min(18rem, 100%);
+}
+
+.wsRow > .wsWide {
+  flex-grow: 2;
+}
+
+.sapUiRespGrid .sapFCard {
+  width: 100%;
+}

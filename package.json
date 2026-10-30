@@ -1,0 +1,20 @@
+{
+  "name": "ui5-dashboard-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal SAPUI5 hackathon starter with local SQLite data",
+  "scripts": {
+    "start": "ui5 serve --port 8080 --open index.html",
+    "build": "ui5 build --clean-dest",
+    "lint": "ui5lint",
+    "verify": "npm run lint && npm run build"
+  },
+  "devDependencies": {
+    "@ui5/cli": "4.0.70",
+    "@ui5/linter": "1.23.6"
+  },
+  "engines": {
+    "node": "^20.11.0 || ^22.0.0 || ^24.0.0",
+    "npm": ">=10"
+  }
+}

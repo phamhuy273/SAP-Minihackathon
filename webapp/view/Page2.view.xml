@@ -1,0 +1,44 @@
+<!-- PAGE 2 is an optional deep-dive. -->
+<mvc:View
+  controllerName="workshop.dashboard.controller.Page"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:f="sap.f"
+  xmlns:card="sap.f.cards"
+  xmlns:layout="sap.ui.layout"
+  xmlns:mc="sap.suite.ui.microchart"
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+  displayBlock="true"
+  height="100%"
+>
+<!-- 🧩 PAGE START -->
+<f:DynamicPage id="page2Content" headerExpanded="true" showFooter="false">
+  <f:title>
+    <f:DynamicPageTitle>
+      <f:heading><Title text="Page 2: rename me" level="H1" /></f:heading>
+      <f:expandedContent><Text text="What question does this page answer?" /></f:expandedContent>
+    </f:DynamicPageTitle>
+  </f:title>
+  <f:content>
+    <VBox width="100%">
+      <HBox class="wsRow" renderType="Bare">
+        <f:Card>
+          <f:header><card:Header title="Card: rename me" iconSrc="sap-icon://table-view" /></f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <!-- 🧩 CARD START -->
+              <Text text="Paste a block here" />
+              <!-- 🧩 CARD END -->
+            </VBox>
+          </f:content>
+        </f:Card>
+      </HBox>
+      <!-- 🧩 MORE START -->
+      <!-- 🧩 MORE END -->
+    </VBox>
+  </f:content>
+</f:DynamicPage>
+<!-- 🧩 PAGE END -->
+</mvc:View>

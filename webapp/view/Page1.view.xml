@@ -1,0 +1,95 @@
+<!--
+  PAGE 1 is required: finding → evidence → recommended action.
+  Develop SQL in the deployed Query Playground, add it to webapp/data.js,
+  then bind the result between the matching markers below.
+-->
+<mvc:View
+  controllerName="workshop.dashboard.controller.Page"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:f="sap.f"
+  xmlns:card="sap.f.cards"
+  xmlns:layout="sap.ui.layout"
+  xmlns:mc="sap.suite.ui.microchart"
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+  displayBlock="true"
+  height="100%"
+>
+<!-- 🧩 PAGE START -->
+<f:DynamicPage id="page1Content" headerExpanded="true" showFooter="false">
+  <f:title>
+    <f:DynamicPageTitle>
+      <f:heading>
+        <Title text="Page 1: rename me" level="H1" wrapping="true" />
+      </f:heading>
+    </f:DynamicPageTitle>
+  </f:title>
+
+  <f:header>
+    <f:DynamicPageHeader pinnable="true">
+      <VBox>
+        <!-- 🧩 FINDING START -->
+        <Title text="Your finding in one sentence, the first thing the president reads." level="H2" wrapping="true" />
+        <Text text="One line of proof with a number." class="sapUiTinyMarginTop" />
+        <!-- 🧩 FINDING END -->
+      </VBox>
+    </f:DynamicPageHeader>
+  </f:header>
+
+  <f:content>
+    <VBox width="100%">
+      <!-- 🧩 KPIs START -->
+      <!-- 🧩 KPIs END -->
+
+      <HBox class="wsRow" renderType="Bare">
+        <f:Card class="wsWide">
+          <f:header>
+            <card:Header title="Evidence A: rename me" subtitle="What does this chart prove?" iconSrc="sap-icon://bar-chart" />
+          </f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <!-- 🧩 EVIDENCE A START -->
+              <Text text="Paste the chart that proves your finding here" />
+              <!-- 🧩 EVIDENCE A END -->
+            </VBox>
+          </f:content>
+        </f:Card>
+
+        <f:Card>
+          <f:header>
+            <card:Header title="Evidence B: rename me" subtitle="Why did it happen?" iconSrc="sap-icon://detail-view" />
+          </f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <!-- 🧩 EVIDENCE B START -->
+              <Text text="Paste a supporting list, table or micro chart here" />
+              <!-- 🧩 EVIDENCE B END -->
+            </VBox>
+          </f:content>
+        </f:Card>
+      </HBox>
+
+      <HBox class="wsRow" renderType="Bare">
+        <f:Card>
+          <f:header>
+            <card:Header title="Recommended action" subtitle="What should they do next semester?" iconSrc="sap-icon://action" />
+          </f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <!-- 🧩 ACTION START -->
+              <MessageStrip text="Write your recommendation here, with the number it is based on." type="Information" showIcon="true" />
+              <!-- 🧩 ACTION END -->
+            </VBox>
+          </f:content>
+        </f:Card>
+      </HBox>
+
+      <!-- 🧩 MORE START -->
+      <!-- 🧩 MORE END -->
+    </VBox>
+  </f:content>
+</f:DynamicPage>
+<!-- 🧩 PAGE END -->
+</mvc:View>
