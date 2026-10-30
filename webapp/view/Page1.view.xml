@@ -1,7 +1,6 @@
 <!--
-  PAGE 1 is required: finding → evidence → recommended action.
-  Develop SQL in the deployed Query Playground, add it to webapp/data.js,
-  then bind the result between the matching markers below.
+  PAGE 1: The Friday Problem Solution
+  Finding → Evidence → Recommended Action
 -->
 <mvc:View
   controllerName="workshop.dashboard.controller.Page"
@@ -22,8 +21,11 @@
   <f:title>
     <f:DynamicPageTitle>
       <f:heading>
-        <Title text="Page 1: rename me" level="H1" wrapping="true" />
+        <Title text="Coding Club: The Friday Problem Solved" level="H1" wrapping="true" />
       </f:heading>
+      <f:snappedContent>
+        <Text text="Finding: Keep the workshops, ditch Friday nights! (Collapsed from 84% to 38% due to Friday shift)." />
+      </f:snappedContent>
     </f:DynamicPageTitle>
   </f:title>
 
@@ -31,8 +33,12 @@
     <f:DynamicPageHeader pinnable="true">
       <VBox>
         <!-- 🧩 FINDING START -->
-        <Title text="Your finding in one sentence, the first thing the president reads." level="H2" wrapping="true" />
-        <Text text="One line of proof with a number." class="sapUiTinyMarginTop" />
+        <Title text="Keep the workshops, ditch Friday nights! Attendance collapsed from 84% to 38% purely due to the Friday schedule shift, not student disinterest." level="H2" wrapping="true" />
+        <Text text="Workshops remain the highest-rated format (4.49 / 5.0) with 94.1% registration demand. The problem is 100% timing, not topics." class="sapUiTinyMarginTop" />
+        <HBox class="sapUiTinyMarginTop">
+          <ObjectStatus text="Root Cause: Timing Shift (H3 Confirmed)" state="Error" icon="sap-icon://alert" class="sapUiSmallMarginEnd" />
+          <ObjectStatus text="Topics &amp; Promotion: Proven Innocent (H1 &amp; H2 Debunked)" state="Success" icon="sap-icon://sys-enter-2" />
+        </HBox>
         <!-- 🧩 FINDING END -->
       </VBox>
     </f:DynamicPageHeader>
@@ -41,17 +47,86 @@
   <f:content>
     <VBox width="100%">
       <!-- 🧩 KPIs START -->
+      <HBox class="wsRow wsRowTight" renderType="Bare">
+        <f:Card width="100%">
+          <f:header>
+            <card:NumericHeader
+              title="Friday Seats Filled"
+              subtitle="Attendance on Friday 18:30"
+              number="{/kpiSummary/friday_fill}"
+              unitOfMeasurement="%"
+              state="Error"
+              trend="Down"
+              details="Target: 80% (-52% collapse)" />
+          </f:header>
+        </f:Card>
+
+        <f:Card width="100%">
+          <f:header>
+            <card:NumericHeader
+              title="Thursday Seats Filled"
+              subtitle="Attendance before Oct (Wks 1-4)"
+              number="{/kpiSummary/thursday_fill}"
+              unitOfMeasurement="%"
+              state="Good"
+              trend="Up"
+              details="Target: 80% (Exceeded target)" />
+          </f:header>
+        </f:Card>
+
+        <f:Card width="100%">
+          <f:header>
+            <card:NumericHeader
+              title="Workshop Rating"
+              subtitle="Average student feedback score"
+              number="{/kpiSummary/workshop_rating}"
+              unitOfMeasurement="/5"
+              state="Good"
+              trend="None"
+              details="Highest rated format in club" />
+          </f:header>
+        </f:Card>
+
+        <f:Card width="100%">
+          <f:header>
+            <card:NumericHeader
+              title="Workshop Sign-ups"
+              subtitle="% of room capacity registered"
+              number="{/kpiSummary/workshop_signup}"
+              unitOfMeasurement="%"
+              state="Good"
+              trend="Up"
+              details="Demand remains near capacity" />
+          </f:header>
+        </f:Card>
+      </HBox>
       <!-- 🧩 KPIs END -->
 
       <HBox class="wsRow" renderType="Bare">
         <f:Card class="wsWide">
           <f:header>
-            <card:Header title="Evidence A: rename me" subtitle="What does this chart prove?" iconSrc="sap-icon://bar-chart" />
+            <card:Header title="Evidence A: The Friday Attendance Drop" subtitle="Attendance collapsed from >80% on Wed/Thu down to 39.5% on Fridays" iconSrc="sap-icon://bar-chart" />
           </f:header>
           <f:content>
             <VBox width="100%" class="sapUiSmallMargin">
               <!-- 🧩 EVIDENCE A START -->
-              <Text text="Paste the chart that proves your finding here" />
+              <viz:VizFrame id="chartWeekday" vizType="column" width="100%" height="20rem" uiConfig="{applicationSet:'fiori'}">
+                <viz:dataset>
+                  <viz.data:FlattenedDataset data="{/attendanceByDay}">
+                    <viz.data:dimensions>
+                      <viz.data:DimensionDefinition name="Weekday" value="{day_name}" />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                      <viz.data:MeasureDefinition name="Seats Filled %" value="{avg_fill}" />
+                      <viz.data:MeasureDefinition name="Show-up %" value="{avg_showup}" />
+                    </viz.data:measures>
+                  </viz.data:FlattenedDataset>
+                </viz:dataset>
+                <viz:feeds>
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Seats Filled %,Show-up %" />
+                  <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Weekday" />
+                </viz:feeds>
+              </viz:VizFrame>
               <!-- 🧩 EVIDENCE A END -->
             </VBox>
           </f:content>
@@ -59,12 +134,29 @@
 
         <f:Card>
           <f:header>
-            <card:Header title="Evidence B: rename me" subtitle="Why did it happen?" iconSrc="sap-icon://detail-view" />
+            <card:Header title="Evidence B: Topics Are Not The Problem" subtitle="Workshops have highest satisfaction (4.49⭐) and strong signups (94%)" iconSrc="sap-icon://table-view" />
           </f:header>
           <f:content>
             <VBox width="100%" class="sapUiSmallMargin">
               <!-- 🧩 EVIDENCE B START -->
-              <Text text="Paste a supporting list, table or micro chart here" />
+              <Table items="{/topicComparison}" noDataText="No topic data available">
+                <columns>
+                  <Column><Text text="Topic" /></Column>
+                  <Column hAlign="Center"><Text text="Feedback" /></Column>
+                  <Column hAlign="Center"><Text text="Sign-ups" /></Column>
+                  <Column hAlign="End"><Text text="Fill Rate" /></Column>
+                </columns>
+                <items>
+                  <ColumnListItem>
+                    <cells>
+                      <ObjectIdentifier title="{topic}" text="{total_events} events" />
+                      <ObjectStatus text="{rating} ⭐" state="{= ${rating} >= 4.3 ? 'Success' : 'None' }" />
+                      <Text text="{signup_pct}%" />
+                      <ObjectNumber number="{fill_pct}" unit="%" state="{= ${fill_pct} >= 75 ? 'Success' : 'Error' }" />
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
               <!-- 🧩 EVIDENCE B END -->
             </VBox>
           </f:content>
@@ -72,14 +164,24 @@
       </HBox>
 
       <HBox class="wsRow" renderType="Bare">
-        <f:Card>
+        <f:Card width="100%">
           <f:header>
-            <card:Header title="Recommended action" subtitle="What should they do next semester?" iconSrc="sap-icon://action" />
+            <card:Header title="Recommended Action for Sponsor Meeting &amp; Spring 2027" subtitle="Actionable plan for Friday's renewal meeting with Quillmoor Software" iconSrc="sap-icon://action" />
           </f:header>
           <f:content>
             <VBox width="100%" class="sapUiSmallMargin">
               <!-- 🧩 ACTION START -->
-              <MessageStrip text="Write your recommendation here, with the number it is based on." type="Information" showIcon="true" />
+              <MessageStrip 
+                text="1. RENEW WORKSHOP SPONSORSHIP THIS FRIDAY: Quillmoor Software funds the workshops. With a 4.49/5 rating and 94% sign-up rate, cancelling them would destroy the club's core value." 
+                type="Success" showIcon="true" class="sapUiSmallMarginBottom" />
+              
+              <MessageStrip 
+                text="2. BAN FRIDAY SESSIONS: Across all 8 campus clubs, Friday events crash to 40% fill rate (compared to 80% on Mon-Thu). Students leave campus for the weekend." 
+                type="Warning" showIcon="true" class="sapUiSmallMarginBottom" />
+
+              <MessageStrip 
+                text="3. RESCHEDULE TO TUESDAY (18:00 - 20:00) IN ROOM M105: Next semester's room bookings show Room M105 (40-seat computer lab) is 100% UNBOOKED on Tuesdays!" 
+                type="Information" showIcon="true" />
               <!-- 🧩 ACTION END -->
             </VBox>
           </f:content>
@@ -87,6 +189,36 @@
       </HBox>
 
       <!-- 🧩 MORE START -->
+      <HBox class="wsRow" renderType="Bare">
+        <f:Card width="100%">
+          <f:header>
+            <card:Header title="Supporting Evidence: Room M105 Schedule for Next Semester (Spring 2027)" subtitle="Proof that Tuesday 18:00 - 20:00 is available for Coding Club" iconSrc="sap-icon://calendar" />
+          </f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <Table items="{/roomAvailabilityM105}">
+                <columns>
+                  <Column><Text text="Weekday" /></Column>
+                  <Column><Text text="Time" /></Column>
+                  <Column><Text text="Status" /></Column>
+                  <Column><Text text="Booked By" /></Column>
+                </columns>
+                <items>
+                  <ColumnListItem>
+                    <cells>
+                      <Text text="{weekday}" />
+                      <Text text="{start_time} - {end_time}" />
+                      <ObjectStatus text="Reserved" state="Warning" />
+                      <Text text="{booked_by}" />
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
+              <MessageStrip text="Notice: TUESDAY has NO bookings at all for Room M105. It is completely free for Coding Club workshops!" type="Success" showIcon="true" class="sapUiTinyMarginTop" />
+            </VBox>
+          </f:content>
+        </f:Card>
+      </HBox>
       <!-- 🧩 MORE END -->
     </VBox>
   </f:content>

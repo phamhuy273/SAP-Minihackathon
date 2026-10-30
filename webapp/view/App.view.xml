@@ -1,6 +1,5 @@
 <!--
-  YOUR APP SHELL. Keep <App id="app" /> and navigation keys page1, page2 and page3.
-  You can copy an alternative shell from the deployed workshop and paste it between the markers.
+  APP SHELL: Coding Club - The Friday Problem
 -->
 <mvc:View
   controllerName="workshop.dashboard.controller.App"
@@ -14,14 +13,14 @@
 <!-- 🧩 SHELL START -->
 <tnt:ToolPage id="toolPage">
   <tnt:header>
-    <f:ShellBar homeIcon="{app>/logo}" title="My app: rename me" />
+    <f:ShellBar homeIcon="{app>/logo}" title="Coding Club · The Friday Problem Dashboard" />
   </tnt:header>
   <tnt:subHeader>
     <IconTabHeader id="nav" selectedKey="page1" select=".onNavSelect" backgroundDesign="Solid">
       <items>
-        <IconTabFilter key="page1" text="The answer" />
-        <IconTabFilter key="page2" text="Page 2" />
-        <IconTabFilter key="page3" text="Page 3" />
+        <IconTabFilter key="page1" text="The Finding &amp; Solution" icon="sap-icon://hint" />
+        <IconTabFilter key="page2" text="Campus-Wide &amp; Promotion Evidence" icon="sap-icon://line-charts" />
+        <IconTabFilter key="page3" text="Spring 2027 Schedule &amp; Sponsor Pitch" icon="sap-icon://calendar" />
       </items>
     </IconTabHeader>
   </tnt:subHeader>

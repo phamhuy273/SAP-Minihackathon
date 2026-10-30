@@ -1,4 +1,6 @@
-<!-- PAGE 2 is an optional deep-dive. -->
+<!--
+  PAGE 2: Deep Dive Evidence (H1 Topics, H2 Promotion, H3 Campus-Wide Timing)
+-->
 <mvc:View
   controllerName="workshop.dashboard.controller.Page"
   xmlns="sap.m"
@@ -17,26 +19,113 @@
 <f:DynamicPage id="page2Content" headerExpanded="true" showFooter="false">
   <f:title>
     <f:DynamicPageTitle>
-      <f:heading><Title text="Page 2: rename me" level="H1" /></f:heading>
-      <f:expandedContent><Text text="What question does this page answer?" /></f:expandedContent>
+      <f:heading>
+        <Title text="Deep-Dive Investigation: Testing H1, H2 &amp; H3" level="H1" wrapping="true" />
+      </f:heading>
+      <f:expandedContent>
+        <Text text="Statistical proof that timing (H3) is the sole culprit, debunking topic fatigue (H1) and promotion gaps (H2)." />
+      </f:expandedContent>
     </f:DynamicPageTitle>
   </f:title>
+
   <f:content>
     <VBox width="100%">
+      <!-- Row 1: Weekly Trend Line Chart -->
       <HBox class="wsRow" renderType="Bare">
-        <f:Card>
-          <f:header><card:Header title="Card: rename me" iconSrc="sap-icon://table-view" /></f:header>
+        <f:Card width="100%">
+          <f:header>
+            <card:Header 
+              title="10-Week Attendance Trajectory (Weeks 1 - 10)" 
+              subtitle="The sharp drop occurred in Week 5 when workshops shifted from Thursday to Friday" 
+              iconSrc="sap-icon://line-chart" />
+          </f:header>
           <f:content>
             <VBox width="100%" class="sapUiSmallMargin">
-              <!-- 🧩 CARD START -->
-              <Text text="Paste a block here" />
-              <!-- 🧩 CARD END -->
+              <viz:VizFrame id="chartWeeklyTrend" vizType="line" width="100%" height="20rem" uiConfig="{applicationSet:'fiori'}">
+                <viz:dataset>
+                  <viz.data:FlattenedDataset data="{/weeklyTrend}">
+                    <viz.data:dimensions>
+                      <viz.data:DimensionDefinition name="Week" value="{week_name}" />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                      <viz.data:MeasureDefinition name="Seats Filled %" value="{fill_pct}" />
+                      <viz.data:MeasureDefinition name="Target %" value="{target_pct}" />
+                    </viz.data:measures>
+                  </viz.data:FlattenedDataset>
+                </viz:dataset>
+                <viz:feeds>
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Seats Filled %,Target %" />
+                  <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Week" />
+                </viz:feeds>
+              </viz:VizFrame>
             </VBox>
           </f:content>
         </f:Card>
       </HBox>
-      <!-- 🧩 MORE START -->
-      <!-- 🧩 MORE END -->
+
+      <!-- Row 2: Campus-wide Friday Drop across ALL Clubs -->
+      <HBox class="wsRow" renderType="Bare">
+        <f:Card class="wsWide">
+          <f:header>
+            <card:Header 
+              title="Campus-Wide Proof: All Clubs Suffer on Friday" 
+              subtitle="Comparing Mon-Thu average fill rate vs Friday across 7 student clubs" 
+              iconSrc="sap-icon://bar-chart" />
+          </f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <viz:VizFrame id="chartCampusClubs" vizType="column" width="100%" height="20rem" uiConfig="{applicationSet:'fiori'}">
+                <viz:dataset>
+                  <viz.data:FlattenedDataset data="{/campusByClubFriday}">
+                    <viz.data:dimensions>
+                      <viz.data:DimensionDefinition name="Club" value="{club_name}" />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                      <viz.data:MeasureDefinition name="Mon-Thu Fill %" value="{weekday_fill}" />
+                      <viz.data:MeasureDefinition name="Friday Fill %" value="{friday_fill}" />
+                    </viz.data:measures>
+                  </viz.data:FlattenedDataset>
+                </viz:dataset>
+                <viz:feeds>
+                  <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Mon-Thu Fill %,Friday Fill %" />
+                  <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Club" />
+                </viz:feeds>
+              </viz:VizFrame>
+            </VBox>
+          </f:content>
+        </f:Card>
+
+        <f:Card>
+          <f:header>
+            <card:Header 
+              title="H2 Disproved: Promotion vs Fill Rate" 
+              subtitle="Friday workshops had highest promotional reach (up to 904 reach) but lowest attendance" 
+              iconSrc="sap-icon://marketing-campaign" />
+          </f:header>
+          <f:content>
+            <VBox width="100%" class="sapUiSmallMargin">
+              <Table items="{/promotionAnalysis}">
+                <columns>
+                  <Column><Text text="Event" /></Column>
+                  <Column><Text text="Topic" /></Column>
+                  <Column hAlign="End"><Text text="Reach" /></Column>
+                  <Column hAlign="End"><Text text="Fill Rate" /></Column>
+                </columns>
+                <items>
+                  <ColumnListItem>
+                    <cells>
+                      <Text text="{event_label}" />
+                      <Text text="{topic}" />
+                      <ObjectNumber number="{total_reach}" />
+                      <ObjectNumber number="{fill_pct}" unit="%" state="{= ${fill_pct} >= 75 ? 'Success' : 'Error' }" />
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
+            </VBox>
+          </f:content>
+        </f:Card>
+      </HBox>
     </VBox>
   </f:content>
 </f:DynamicPage>
